@@ -3,6 +3,8 @@ import { Button, Card, Spinner } from "react-bootstrap";
 import { collection, query, where, getDocs, getFirestore, DocumentData } from "firebase/firestore";
 import { getStorage, ref, getDownloadURL, getMetadata, FullMetadata } from "firebase/storage";
 import { useParams } from "react-router-dom";
+import { bytesToSize } from "../../utils";
+import firebaseService from "../../services/firebase";
 
 export default function File() {
     const params = useParams();
@@ -12,40 +14,22 @@ export default function File() {
     const [metadata, setMetadata] = useState<FullMetadata>();
     const [loading, setLoading] = useState<boolean>(true);
 
-    const bytesToSize = (bytes: number): string => {
-        const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB'];
-        if (bytes === 0) return 'n/a';
-        const i = Math.min(Math.floor(Math.log(bytes) / Math.log(1024)), sizes.length - 1);
-        if (i === 0) return `${bytes} ${sizes[i]}`;
-        return `${(bytes / (1024 ** i)).toFixed(1)} ${sizes[i]}`;
-    }
-
     const handleDownload = async () => {
-        console.log(metadata); return;
-        const response = await fetch(downloadURL, {
-            mode: 'no-cors'
-        });
-
-        const blob = await response.blob();
-
-        const objectUrl = window.URL.createObjectURL(blob);
         const a = document.createElement('a');
-        a.href = objectUrl;
-        a.download = file.originalName
+        a.href = downloadURL;
+        a.download = file.originalFilename
         a.click();
         a.remove();
     }
 
     useEffect(() => {
         async function initialize() {
-            const q = query(collection(getFirestore(), 'images'), where('key', '==', params.id));
-            const querySnapshot = await getDocs(q);
+            const file = await firebaseService.getSingleFile(params.id);
 
-            if (!querySnapshot.empty) {
-                const documentData = querySnapshot.docs[0].data();
-                setFile(documentData);
-                setDownloadURL(await getDownloadURL(ref(getStorage(), documentData.fullPath)));
-                setMetadata(await getMetadata(ref(getStorage(), documentData.fullPath)));
+            if (file) {
+                setFile(file);
+                setDownloadURL(await getDownloadURL(ref(getStorage(), file.uniqueFilename)));
+                setMetadata(await getMetadata(ref(getStorage(), file.uniqueFilename)));
             } else {
                 // TODO: Redirect to 404 Not Found.
             }
@@ -72,7 +56,7 @@ export default function File() {
                 <Card className="text-center">
                     <Card.Header>Téléchargement</Card.Header>
                     <Card.Body>
-                        <Card.Title>{file?.originalName} - {bytesToSize(metadata?.size)}</Card.Title>
+                        <Card.Title>{file?.originalFilename} - {bytesToSize(metadata?.size)}</Card.Title>
                         <Button variant="success" onClick={handleDownload}>Télécharger</Button>
                     </Card.Body>
                 </Card>

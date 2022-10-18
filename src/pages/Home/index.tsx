@@ -1,9 +1,8 @@
 import { ChangeEvent, FormEvent, useState } from 'react'
 import { Button, Card, Form } from 'react-bootstrap'
-import {addDoc, collection, getFirestore} from "firebase/firestore";
+import firebaseService from '../../services/firebase';
 import { getStorage, ref, uploadBytes } from "firebase/storage";
 import { uuidv4 } from '@firebase/util';
-import { nanoid } from 'nanoid'
 import Swal from 'sweetalert2';
 
 export default function Home() {
@@ -22,23 +21,15 @@ export default function Home() {
     const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
-        const filename = `${uuidv4()}.${file.name.split('.').pop()}`;
-        const key = nanoid(8).toUpperCase();
-        const storageRef = ref(getStorage(), filename);
-
-        await uploadBytes(storageRef, file);
-
-        await addDoc(collection(getFirestore(), 'images'), {
-            fullPath: filename,
-            key: key
-        });
+        const uniqueFilename = await firebaseService.uploadFile(file);
+        const id = await firebaseService.addFile(file.name, uniqueFilename);
 
         setFile(null);
         fileInputRef.value = null;
         
         Swal.fire({
             confirmButtonText: 'OK',
-            footer: `<a href="#">${key}</a>`,
+            footer: `<a href="#">${id}</a>`,
             icon: 'success',
             title: "C'est tout bon !",
             text: 'Le fichier a été envoyé avec succès !'
