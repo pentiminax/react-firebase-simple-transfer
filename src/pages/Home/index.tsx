@@ -1,8 +1,6 @@
 import { ChangeEvent, FormEvent, useState } from 'react'
 import { Button, Card, Form } from 'react-bootstrap'
 import firebaseService from '../../services/firebase';
-import { getStorage, ref, uploadBytes } from "firebase/storage";
-import { uuidv4 } from '@firebase/util';
 import Swal from 'sweetalert2';
 
 export default function Home() {

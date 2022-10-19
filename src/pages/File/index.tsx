@@ -14,14 +14,6 @@ export default function File() {
     const [metadata, setMetadata] = useState<FullMetadata>();
     const [loading, setLoading] = useState<boolean>(true);
 
-    const handleDownload = async () => {
-        const a = document.createElement('a');
-        a.href = downloadURL;
-        a.download = file.originalFilename
-        a.click();
-        a.remove();
-    }
-
     useEffect(() => {
         async function initialize() {
             const file = await firebaseService.getSingleFile(params.id);
@@ -36,11 +28,18 @@ export default function File() {
 
             setLoading(false);
         }
-
         if (!file) {
             initialize();
         }
     });
+
+    const handleDownload = async () => {
+        const a = document.createElement('a');
+        a.href = downloadURL;
+        a.download = file.originalFilename
+        a.click();
+        a.remove();
+    }
 
     return (
         <div>

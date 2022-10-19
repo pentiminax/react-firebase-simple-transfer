@@ -1,5 +1,5 @@
 import { initializeApp } from "firebase/app";
-import { Auth, getAuth, GoogleAuthProvider, signInWithPopup, User, UserCredential } from "firebase/auth";
+import { Auth, getAuth, GoogleAuthProvider, signInWithPopup, signOut, User, UserCredential } from "firebase/auth";
 import { collection, CollectionReference, doc, DocumentData, Firestore, getDoc, getFirestore, setDoc } from "firebase/firestore";
 import { FirebaseStorage, getStorage, ref, uploadBytes } from "firebase/storage";
 import { uuidv4 } from '@firebase/util';
@@ -61,6 +61,10 @@ class FirebaseService {
         } catch (error) {
             return null;
         }
+    }
+
+    async signOut(): Promise<void> {
+        await signOut(this.auth);
     }
 }
 
