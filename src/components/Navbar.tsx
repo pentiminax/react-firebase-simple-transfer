@@ -1,8 +1,12 @@
+import { useContext } from "react";
 import { Button, Container, Nav, Navbar as ReactNavbar } from "react-bootstrap"
 import { Link } from "react-router-dom"
+import { AuthContext } from "../context/AuthContext";
 import firebaseService from "../services/firebase"
 
-export default function Navbar({ user }) {
+export default function Navbar() {
+    const { currentUser, isLoaded } = useContext(AuthContext);
+
     const handleLogin = async () => {
         await firebaseService.signInWithGoogle();
     }
@@ -22,12 +26,14 @@ export default function Navbar({ user }) {
                         <Link to="/files" className="nav-link">Fichiers</Link>
                     </Nav>
                 </ReactNavbar.Collapse>
-                {user
-                    ?
-                    <Button variant="outline-danger" onClick={handleLogout}>Se déconnecter</Button>
-                    :
-                    <Button variant="primary" onClick={handleLogin}>Se connecter</Button>
-                }
+                <div className={isLoaded ? '' : 'd-none'}>
+                    {currentUser
+                        ?
+                        <Button variant="outline-danger" onClick={handleLogout}>Se déconnecter</Button>
+                        :
+                        <Button variant="primary" onClick={handleLogin}>Se connecter</Button>
+                    }
+                </div>
             </Container>
         </ReactNavbar >
     )
