@@ -16,25 +16,25 @@ export default function Navbar() {
     }
 
     return (
-        <ReactNavbar variant="light" bg="light">
+        <ReactNavbar variant="light" bg="light" expand="lg">
             <Container>
                 <ReactNavbar.Brand href="#">Simple Transfer</ReactNavbar.Brand>
-                <ReactNavbar.Toggle />
-                <ReactNavbar.Collapse>
+                <ReactNavbar.Toggle aria-controls="navbar-nav" />
+                <ReactNavbar.Collapse id="navbar-nav">
                     <Nav className="me-auto">
                         <Link to="/" className="nav-link">Accueil</Link>
                         <Link to="/files" className="nav-link">Fichiers</Link>
                         {currentUser && <Link to="/sent" className="nav-link">Fichiers envoyés</Link>}
                     </Nav>
+                    <div className={isLoaded ? '' : 'd-none'}>
+                        {currentUser
+                            ?
+                            <Button variant="outline-danger" onClick={handleLogout}>Se déconnecter</Button>
+                            :
+                            <Button variant="primary" onClick={handleLogin}>Se connecter</Button>
+                        }
+                    </div>
                 </ReactNavbar.Collapse>
-                <div className={isLoaded ? '' : 'd-none'}>
-                    {currentUser
-                        ?
-                        <Button variant="outline-danger" onClick={handleLogout}>Se déconnecter</Button>
-                        :
-                        <Button variant="primary" onClick={handleLogin}>Se connecter</Button>
-                    }
-                </div>
             </Container>
         </ReactNavbar >
     )

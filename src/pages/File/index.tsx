@@ -3,7 +3,7 @@ import { Alert, Button, Card, Spinner } from "react-bootstrap";
 import { DocumentData } from "firebase/firestore";
 import { getStorage, ref, getMetadata, FullMetadata, getBlob } from "firebase/storage";
 import { useParams } from "react-router-dom";
-import { bytesToSize } from "../../utils";
+import { bytesToSize, createClickableAnchorForObjectURL } from "../../utils";
 import firebaseService, { FileData } from "../../services/firebase";
 
 export default function File() {
@@ -19,9 +19,13 @@ export default function File() {
     useEffect(() => {
         const initialize = async () => {
             const file = await firebaseService.getSingleFile(params.id);
+
             setFile(file);
             setMetadata(await getMetadata(ref(getStorage(), file.uniqueFilename)));
-            setOwner(await firebaseService.getSingleUser(file.userId));
+
+            if (file.userId) {
+                setOwner(await firebaseService.getSingleUser(file.userId));
+            }
         }
 
         if (!file) {
@@ -35,18 +39,13 @@ export default function File() {
         setDownloading(true);
 
         const blob = await getBlob(ref(getStorage(), file.uniqueFilename));
-
         const url = URL.createObjectURL(blob);
-
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = file.uniqueFilename;
-
-        document.body.appendChild(a);
+        const a = createClickableAnchorForObjectURL(url, file.originalFilename);
 
         a.click();
 
         document.body.removeChild(a);
+        
         URL.revokeObjectURL(url);
 
         setDownloading(false);
