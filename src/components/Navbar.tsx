@@ -24,6 +24,7 @@ export default function Navbar() {
                     <Nav className="me-auto">
                         <Link to="/" className="nav-link">Accueil</Link>
                         <Link to="/files" className="nav-link">Fichiers</Link>
+                        {currentUser && <Link to="/sent" className="nav-link">Fichiers envoyés</Link>}
                     </Nav>
                 </ReactNavbar.Collapse>
                 <div className={isLoaded ? '' : 'd-none'}>

@@ -10,7 +10,9 @@
   },
   "dependencies": {
     "bootstrap": "^5.2.2",
+    "file-saver": "^2.0.5",
     "firebase": "^9.12.1",
+    "got": "^12.5.2",
     "nanoid": "^4.0.0",
     "react": "^18.2.0",
     "react-bootstrap": "^2.5.0",
@@ -18,9 +20,11 @@
     "react-router-dom": "^6.4.2",
     "sass": "^1.55.0",
     "sweetalert2": "^11.6.2",
+    "util.promisify": "^1.1.1",
     "uuid": "^9.0.0"
   },
   "devDependencies": {
+    "@types/file-saver": "^2.0.5",
     "@types/react": "^18.0.23",
     "@types/react-dom": "^18.0.7",
     "@vitejs/plugin-react": "^2.2.0",

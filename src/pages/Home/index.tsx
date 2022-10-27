@@ -2,7 +2,6 @@ import { ChangeEvent, FormEvent, useState } from 'react'
 import { Button, Card, Form, ProgressBar } from 'react-bootstrap'
 import firebaseService from '../../services/firebase';
 import Swal from 'sweetalert2';
-import { useLocation } from 'react-router-dom';
 
 export default function Home() {
     const [file, setFile] = useState<File>();
@@ -21,7 +20,6 @@ export default function Home() {
         e.preventDefault();
 
         const uniqueFilename = firebaseService.getUniqueFilename(file);
-
         const uploadTask = firebaseService.uploadFile(file, uniqueFilename);
 
         uploadTask.on('state_changed', (snapshot) => {
@@ -37,8 +35,8 @@ export default function Home() {
             confirmButtonText: 'OK',
             footer: `<a href="/files/${id}">${id}</a>`,
             icon: 'success',
-            title: "C'est tout bon !",
-            text: 'Le fichier a été envoyé avec succès !'
+            text: 'Le fichier a été envoyé avec succès !',
+            title: "C'est tout bon !"
         });
     }
 

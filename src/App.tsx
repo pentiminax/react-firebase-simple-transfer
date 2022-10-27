@@ -1,5 +1,6 @@
 import Home from './pages/Home';
 import File from './pages/File';
+import Sent from './pages/Sent';
 import RequestFile from './pages/RequestFile';
 import { Routes, Route, BrowserRouter } from "react-router-dom";
 import Login from './pages/Login/Index';
@@ -21,6 +22,7 @@ function App() {
                                 <Route path="/files/" element={<RequestFile />} />
                                 <Route path="/files/:id" element={<File />} />
                                 <Route path="/login" element={<Login />} />
+                                <Route path="/sent" element={<Sent />} />
                             </Routes>
                         </Col>
                     </Row>
