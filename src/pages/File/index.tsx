@@ -18,20 +18,22 @@ export default function File() {
 
     useEffect(() => {
         const initialize = async () => {
-            const file = await firebaseService.getSingleFile(params.id);
-
-            setFile(file);
-            setMetadata(await getMetadata(ref(getStorage(), file.uniqueFilename)));
-
-            if (file.userId) {
-                setOwner(await firebaseService.getSingleUser(file.userId));
+            try {
+                const file = await firebaseService.getSingleFile(params.id);
+                setFile(file);
+                setMetadata(await getMetadata(ref(getStorage(), file.uniqueFilename)));
+                if (file.userId) {
+                    setOwner(await firebaseService.getSingleUser(file.userId));
+                }
+            } catch (error) {
+                setError(true)
+            } finally {
+                setLoading(false)
             }
         }
 
         if (!file) {
-            initialize()
-                .catch(() => setError(true))
-                .finally(() => setLoading(false));
+            initialize();
         }
     }, []);
 
@@ -45,7 +47,7 @@ export default function File() {
         a.click();
 
         document.body.removeChild(a);
-        
+
         URL.revokeObjectURL(url);
 
         setDownloading(false);
