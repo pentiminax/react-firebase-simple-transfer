@@ -35,11 +35,11 @@ export default function File() {
         if (!file) {
             initialize();
         }
-    }, []);
+    }, [file]);
 
     const handleDownload = async () => {
         setDownloading(true);
-
+        
         const blob = await getBlob(ref(getStorage(), file.uniqueFilename));
         const url = URL.createObjectURL(blob);
         const a = createClickableAnchorForObjectURL(url, file.originalFilename);
