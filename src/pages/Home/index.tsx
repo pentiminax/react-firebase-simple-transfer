@@ -20,8 +20,6 @@ export default function Home() {
 
         const fileSizeInMB = Number((files[0].size / (1048576)).toFixed(2));
 
-        console.log(fileSizeInMB);
-
         if (fileSizeInMB >= MAX_FILE_SIZE_IN_MB) {
             Swal.fire({
                 icon: 'error',

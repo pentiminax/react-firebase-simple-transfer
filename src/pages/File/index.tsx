@@ -1,41 +1,16 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Alert, Button, Card, Spinner } from "react-bootstrap";
-import { DocumentData } from "firebase/firestore";
-import { getStorage, ref, getMetadata, FullMetadata, getBlob } from "firebase/storage";
+import { getStorage, ref, getBlob } from "firebase/storage";
 import { useParams } from "react-router-dom";
 import { bytesToSize, createClickableAnchorForObjectURL } from "../../utils";
-import firebaseService, { FileData } from "../../services/firebase";
+import { useFile } from "../../hooks/useFile";
 
 export default function File() {
     const params = useParams();
 
     const [downloading, setDownloading] = useState<boolean>(false);
-    const [error, setError] = useState<boolean>(false);
-    const [file, setFile] = useState<FileData>(null);
-    const [loading, setLoading] = useState<boolean>(true);
-    const [metadata, setMetadata] = useState<FullMetadata>();
-    const [owner, setOwner] = useState<DocumentData>();
 
-    useEffect(() => {
-        const initialize = async () => {
-            try {
-                const file = await firebaseService.getSingleFile(params.id);
-                setFile(file);
-                setMetadata(await getMetadata(ref(getStorage(), file.uniqueFilename)));
-                if (file.userId) {
-                    setOwner(await firebaseService.getSingleUser(file.userId));
-                }
-            } catch (error) {
-                setError(true)
-            } finally {
-                setLoading(false)
-            }
-        }
-
-        if (!file) {
-            initialize();
-        }
-    }, [file]);
+    const { error, file, loading, metadata, owner } = useFile(params.id);
 
     const handleDownload = async () => {
         setDownloading(true);

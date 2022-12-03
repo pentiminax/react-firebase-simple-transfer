@@ -1,4 +1,4 @@
-import { ChangeEvent, ChangeEventHandler, FormEvent, useState } from "react";
+import { ChangeEvent, FormEvent, useState } from "react";
 import { Button, Card, Form } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";

@@ -1,22 +1,8 @@
-import { useContext, useEffect, useState } from "react";
 import { Anchor, Card, ListGroup, ListGroupItem } from "react-bootstrap"
-import { AuthContext } from "../../context/AuthContext";
-import firebaseService, { FileData } from "../../services/firebase";
-;
+import { useFilesSentByCurrentUser } from "../../hooks/useFilesSentByCurrentUser";
 
 export default function Sent() {
-    const { currentUser } = useContext(AuthContext);
-    const [files, setFiles] = useState<FileData[]>([]);
-
-    useEffect(() => {
-        async function initialize() {
-            setFiles(await firebaseService.getFilesSentByCurrentUser());
-        }
-
-        if (currentUser) {
-            initialize();
-        }
-    }, [currentUser]);
+    const { files } = useFilesSentByCurrentUser();
 
     return (
         <Card>
