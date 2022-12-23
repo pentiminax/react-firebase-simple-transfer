@@ -2,7 +2,7 @@ import { ChangeEvent, FormEvent, useState } from "react";
 import { Button, Card, Form } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
-import firebaseService from "../../services/firebase";
+import firebaseService from "../services/firebase";
 
 export default function RequestFile() {
     const [fileId, setFileId] = useState<string>("");

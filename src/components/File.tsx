@@ -2,8 +2,8 @@ import { useState } from "react";
 import { Alert, Button, Card, Spinner } from "react-bootstrap";
 import { getStorage, ref, getBlob } from "firebase/storage";
 import { useParams } from "react-router-dom";
-import { bytesToSize, createClickableAnchorForObjectURL } from "../../utils";
-import { useFile } from "../../hooks/useFile";
+import { bytesToSize, createClickableAnchorForObjectURL } from "../utils";
+import { useFile } from "../hooks/useFile";
 
 export default function File() {
     const params = useParams();

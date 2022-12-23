@@ -1,13 +1,15 @@
-import Home from './pages/Home';
-import File from './pages/File';
-import Sent from './pages/Sent';
-import RequestFile from './pages/RequestFile';
-import { Routes, Route, BrowserRouter } from "react-router-dom";
-import Login from './pages/Login/Index';
-import './App.scss'
 import Navbar from './components/Navbar';
 import { Col, Container, Row } from 'react-bootstrap';
+import { Routes, Route, BrowserRouter } from "react-router-dom";
 import { AuthProvider } from './context/AuthContext';
+import './App.scss'
+import { lazy, Suspense } from 'react';
+
+const Home = lazy(() => import('./components/Home'));
+const File = lazy(() => import('./components/File'));
+const RequestFile = lazy(() => import('./components/RequestFile'));
+const FileSent = lazy(() => import('./components/FileSent'));
+const Login = lazy(() => import('./components/Login'));
 
 function App() {
     return (
@@ -18,11 +20,11 @@ function App() {
                     <Row>
                         <Col xl={{ span: 6, offset: 3 }}>
                             <Routes>
-                                <Route path="/" element={<Home />} />
-                                <Route path="/files/" element={<RequestFile />} />
-                                <Route path="/files/:id" element={<File />} />
-                                <Route path="/login" element={<Login />} />
-                                <Route path="/sent" element={<Sent />} />
+                                <Route path="/" element={<Suspense><Home /></Suspense>} />
+                                <Route path="/files" element={<Suspense><RequestFile /></Suspense>} />
+                                <Route path="/files/:id" element={<Suspense><File /></Suspense>} />
+                                <Route path="/login" element={<Suspense><Login /></Suspense>} />
+                                <Route path="/sent" element={<Suspense><FileSent /></Suspense>} />
                             </Routes>
                         </Col>
                     </Row>

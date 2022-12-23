@@ -1,5 +1,5 @@
 import { Button, Card } from "react-bootstrap";
-import firebaseService from "../../services/firebase";
+import firebaseService from "../services/firebase";
 
 export default function Login() {
 

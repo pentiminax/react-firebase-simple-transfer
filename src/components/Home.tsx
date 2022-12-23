@@ -1,6 +1,6 @@
 import { ChangeEvent, FormEvent, useState } from 'react'
 import { Button, Card, Form, ProgressBar } from 'react-bootstrap'
-import firebaseService from '../../services/firebase';
+import firebaseService from '../services/firebase';
 import Swal from 'sweetalert2';
 
 export default function Home() {
