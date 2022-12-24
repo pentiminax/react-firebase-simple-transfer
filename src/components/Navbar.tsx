@@ -7,14 +7,6 @@ import firebaseService from "../services/firebase"
 export default function Navbar() {
     const { currentUser, isLoaded } = useContext(AuthContext);
 
-    const handleLogin = async () => {
-        await firebaseService.signInWithGoogle();
-    }
-
-    const handleLogout = async () => {
-        await firebaseService.signOut();
-    }
-
     return (
         <ReactNavbar variant="light" bg="light" expand="lg">
             <Container>
@@ -29,9 +21,9 @@ export default function Navbar() {
                     <div className={isLoaded ? '' : 'd-none'}>
                         {currentUser
                             ?
-                            <Button variant="outline-danger" onClick={handleLogout}>Se déconnecter</Button>
+                            <Button variant="outline-danger" onClick={async () => await firebaseService.signOut()}>Se déconnecter</Button>
                             :
-                            <Button variant="primary" onClick={handleLogin}>Se connecter</Button>
+                            <Button variant="primary" onClick={async () => await firebaseService.signInWithGoogle()}>Se connecter</Button>
                         }
                     </div>
                 </ReactNavbar.Collapse>

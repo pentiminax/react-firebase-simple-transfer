@@ -9,7 +9,6 @@ const Home = lazy(() => import('./components/Home'));
 const File = lazy(() => import('./components/File'));
 const RequestFile = lazy(() => import('./components/RequestFile'));
 const FileSent = lazy(() => import('./components/FileSent'));
-const Login = lazy(() => import('./components/Login'));
 
 function App() {
     return (
@@ -23,7 +22,6 @@ function App() {
                                 <Route path="/" element={<Suspense><Home /></Suspense>} />
                                 <Route path="/files" element={<Suspense><RequestFile /></Suspense>} />
                                 <Route path="/files/:id" element={<Suspense><File /></Suspense>} />
-                                <Route path="/login" element={<Suspense><Login /></Suspense>} />
                                 <Route path="/sent" element={<Suspense><FileSent /></Suspense>} />
                             </Routes>
                         </Col>

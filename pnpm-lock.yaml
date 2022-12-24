@@ -7,7 +7,6 @@ specifiers:
   '@types/react-dom': ^18.0.9
   '@vitejs/plugin-react': ^3.0.0
   bootstrap: ^5.2.3
-  file-saver: ^2.0.5
   firebase: ^9.15.0
   nanoid: ^4.0.0
   react: ^18.2.0
@@ -23,7 +22,6 @@ dependencies:
   '@firebase/util': 1.8.0
   '@popperjs/core': 2.11.6
   bootstrap: 5.2.3_@popperjs+core@2.11.6
-  file-saver: 2.0.5
   firebase: 9.15.0
   nanoid: 4.0.0
   react: 18.2.0
@@ -1345,10 +1343,6 @@ packages:
     engines: {node: '>=0.8.0'}
     dependencies:
       websocket-driver: 0.7.4
-    dev: false
-
-  /file-saver/2.0.5:
-    resolution: {integrity: sha512-P9bmyZ3h/PRG+Nzga+rbdI4OEpNDzAVyy74uVO9ATgzLK6VtAsYybF/+TOCvrc0MO793d6+42lLyZTw7/ArVzA==}
     dev: false
 
   /fill-range/7.0.1:

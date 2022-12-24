@@ -52,7 +52,7 @@ export default function File() {
                             </Button>
                         </Card.Body>
                         <Card.Footer>
-                            {owner ? `Partagé par ${owner.displayName}` : 'Partagé par un utilisateur anonyme'}
+                        Partagé par {owner ? `${owner.displayName}` : 'un utilisateur anonyme'}
                         </Card.Footer>
                     </Card>
                 )}
